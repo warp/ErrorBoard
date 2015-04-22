@@ -1,14 +1,9 @@
-var path = require('path');
-var NeDB = require('nedb');
+var pmongo = require('promised-mongo');
 
-var config = require('../package.json').config;
-var db = new NeDB({
-    filename: path.join(__dirname, '..', config.dbfile),
-    autoload: true
-});
+var db = pmongo(process.env.MONGOLAB_URI).collection('errors');
 
 db.ensureIndex({
-    fieldName: 'timestamp'
+  fieldName: 'timestamp'
 });
 
 module.exports = db;
